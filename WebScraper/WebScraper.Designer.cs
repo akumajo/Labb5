@@ -1,6 +1,6 @@
 ﻿namespace WebScraper
 {
-    partial class Form1
+    partial class WebScraper
     {
         /// <summary>
         /// Required designer variable.
@@ -47,7 +47,7 @@
             this.labelStatus.ForeColor = System.Drawing.SystemColors.ControlText;
             this.labelStatus.Location = new System.Drawing.Point(10, 602);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(186, 32);
+            this.labelStatus.Size = new System.Drawing.Size(121, 21);
             this.labelStatus.TabIndex = 4;
             this.labelStatus.Text = "Found 0 images";
             // 
@@ -90,7 +90,7 @@
             this.textBoxInput.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxInput.Location = new System.Drawing.Point(4, 9);
             this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(899, 32);
+            this.textBoxInput.Size = new System.Drawing.Size(899, 22);
             this.textBoxInput.TabIndex = 8;
             // 
             // buttonExtract
@@ -139,7 +139,7 @@
             this.textBoxDisplayURLs.TabIndex = 3;
             this.textBoxDisplayURLs.WordWrap = false;
             // 
-            // Form1
+            // WebScraper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -150,10 +150,10 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.labelStatus);
-            this.Name = "Form1";
+            this.Name = "WebScraper";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "WebScraper v0.9";
+            this.Text = "WebScraper v1.0.0";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

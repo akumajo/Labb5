@@ -11,13 +11,13 @@ using System.Windows.Forms;
 
 namespace WebScraper
 {
-    public partial class Form1 : Form
+    public partial class WebScraper : Form
     {
         readonly HttpClient client = new HttpClient();
         Dictionary<Task<byte[]>, string> downloads = new Dictionary<Task<byte[]>, string>();
         List<string> URLCollection = new List<string>();
         private string WebsiteURL { get; set; }
-        public Form1()
+        public WebScraper()
         {
             InitializeComponent();
         }
@@ -38,7 +38,7 @@ namespace WebScraper
             Regex imgExtension = new Regex(@"\.jpg|\.jpeg|\.png|\.gif|\.bmp");
             return imgExtension.Match(imgUrl).Value;
         }
-
+        
         private string ReturnSavePath()
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
@@ -50,6 +50,51 @@ namespace WebScraper
         public string GetFullPath(string selectedSavePath, string filename)
         {
             return Path.Combine(selectedSavePath, filename);
+        }
+
+        private void ResetApplication()
+        {
+            URLCollection.Clear();
+            textBoxDisplayURLs.Text = "";
+            buttonSave.Enabled = false;
+            labelStatus.Text = $"Found {0} images";
+        }
+
+        private void CheckIfInputContainsHttp(string input)
+        {
+            if (!input.Contains("http://"))
+                WebsiteURL = $"http://{input}";
+            else
+                WebsiteURL = input;
+        }
+
+        private string ImgName(int counter, string imgExtension)
+        {
+            string imageName = "Image" + (counter + 1) + imgExtension;
+            return imageName;
+        }
+
+        private void AddURLCollectionToDownloads()
+        {
+            for (int i = 0; i < URLCollection.Count; i++)
+            {
+                downloads.Add(client.GetByteArrayAsync($"{URLCollection[i]}"), URLCollection[i]);
+            }
+        }
+
+        private void AddRegexMatchesToURLCollection(MatchCollection matches)
+        {
+            for (int i = 0; i < matches.Count; i++)
+            {
+                if (!matches[i].ToString().Contains("http"))
+                {
+                    URLCollection.Add($"{WebsiteURL}{matches[i]}");
+                }
+                else
+                {
+                    URLCollection.Add($"{matches[i]}");
+                }
+            }
         }
 
         private async Task<string> DownloadUrlAsync()
@@ -169,51 +214,6 @@ namespace WebScraper
             if (result == true)
             {
                 await PrintImgURLAsync();
-            }
-        }
-
-        private void ResetApplication()
-        {
-            URLCollection.Clear();
-            textBoxDisplayURLs.Text = "";
-            buttonSave.Enabled = false;
-            labelStatus.Text = $"Found {0} images";
-        }
-
-        private void CheckIfInputContainsHttp(string input)
-        {
-            if (!input.Contains("http://"))
-                WebsiteURL = $"http://{input}";
-            else
-                WebsiteURL = input;
-        }
-
-        private string ImgName(int counter, string imgExtension)
-        {
-            string imageName = "Image" + (counter + 1) + imgExtension;
-            return imageName;
-        }
-
-        private void AddURLCollectionToDownloads()
-        {
-            for (int i = 0; i < URLCollection.Count; i++)
-            {
-                downloads.Add(client.GetByteArrayAsync($"{URLCollection[i]}"), URLCollection[i]);
-            }
-        }
-
-        private void AddRegexMatchesToURLCollection(MatchCollection matches)
-        {
-            for (int i = 0; i < matches.Count; i++)
-            {
-                if (!matches[i].ToString().Contains("http"))
-                {
-                    URLCollection.Add($"{WebsiteURL}{matches[i]}");
-                }
-                else
-                {
-                    URLCollection.Add($"{matches[i]}");
-                }
             }
         }
 
